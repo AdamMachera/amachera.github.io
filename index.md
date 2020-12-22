@@ -9,22 +9,22 @@ Using managed identities eliminates necessity to store service principal client 
 
 I have created organization adamuso
 ### 2. Create shared mailbox [here](https://admin.exchange.microsoft.com/)
-![Image](src/sharedmailbox.png)
+![Image](images/sharedmailbox.png)
 
 I have created emailsender@adamuso.onmicrosoft.com
 
 
 ### 3. Assign license for shared mailbox
 It can work with office 365 it can be done [here] (https://admin.microsoft.com/Adminportal/Home#/users)
-![Image](src/assignlicense.png)
+![Image](images/assignlicense.png)
 
 ### 4. Create mail enabled security group
-![Image](src/assignlicense.png)
+![Image](images/mailenabledgroup.png)
 
 I have created sendinggroup@adamuso.onmicrosoft.com
 
 ###	5. Add sharedmailbox as a member of newly created mail enabled security group
-![Image](src/sendinggroupmember.png)
+![Image](images/sendinggroupmember.png)
 
 In my case I have added emailsender@adamuso.onmicrosoft.com as a member to sendinggroup@adamuso.onmicrosoft.com
 
@@ -36,9 +36,9 @@ Data in azure portal will be presented earlier but if you don't wait you might s
 To check if office 365 was synchronized with azure AD go to porta.azure.com.
 Open Azure AD and under Users and Groups tab you should see
 
-![Image](src/emailsenderazuread.png)
+![Image](images/emailsenderazuread.png)
 
-![Image](src/sendinggroupazuread.png)
+![Image](images/sendinggroupazuread.png)
 
 
 ###	7. Create resource group 
@@ -47,7 +47,7 @@ At portal.azure.com create resource group (In my case it is called DefaultResour
 ### 8. Create managed identity
 In the above resource group create managed identity (mine was named sendingemailsmanagedidentity)
 
-![Image](src/sendingemailsidentity.png)
+![Image](images/sendingemailsidentity.png)
 
 Most important thing is to take the Client Id - (6f5a0613-55e2-4074-a8b4-0608d584d27e) - because it is going to be used to scope access for this identity to exchange mail enabled security group.
 
@@ -219,15 +219,15 @@ namespace FunctionApp1
 Publish this function to newly created azure function.
 Go to this function app in portal.azure.com and go to Identity tab and add sendingemailsmanagedidentity managed identity
 
-![Image](src/azurefunctionidentityassignment.png)
+![Image](images/azurefunctionidentityassignment.png)
 
 Once it is assigned go to function tab and click "Get Function Url"
 
-![Image](src/functionurl.png)
+![Image](images/functionurl.png)
 
 Open [it](https://functionapp120201221154220.azurewebsites.net/api/Function1?code=5j50sc2fc4e5glp0nOaaaUg/Xlwaoz4fOIcui9a2x4UPsrzR39HL5g==) in browser
 
 As result you will get operation result.
 If operation was succesful email will be sent from emailsender@adamuso.onmicrosoft.com (shared mailbox)
 
-![Image](src/sendresult.png)
+![Image](images/sendresult.png)
